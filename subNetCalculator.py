@@ -22,7 +22,7 @@ class SubNCalc:
             print("Please checks if file is in directory")
             self.start_menu()
 
-       def up_to_eight(self, power, sn_list):
+    def up_to_eight(self, power, sn_list):
         sn_list = sn_list[0].split('.')
         sn = [int(x) for x in sn_list]
         ip_list = []
