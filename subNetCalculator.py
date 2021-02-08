@@ -6,7 +6,7 @@ class SubNCalc:
 
     def open_file(self):
         print('Please put file name:')
-        self.user_input = 'my.txt'  # input()
+        self.user_input = input()
         try:
             with open(self.user_input, "r") as sub_net_list:
                 sub_net_list = sub_net_list.readlines()
