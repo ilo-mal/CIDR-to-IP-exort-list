@@ -22,15 +22,7 @@ class SubNCalc:
             print("Please checks if file is in directory")
             self.start_menu()
 
-    def max_number(self, power):
-        dict_b = {8: 256, 7: 128, 6: 64, 5: 32, 4: 16, 3: 8, 2: 4, 1: 2}
-        range_last = 0
-        for a, b in dict_b.items():
-            if a == power:
-                range_last = b - 1
-        return range_last
-
-    def up_to_eight(self, power, sn_list):
+       def up_to_eight(self, power, sn_list):
         sn_list = sn_list[0].split('.')
         sn = [int(x) for x in sn_list]
         ip_list = []
