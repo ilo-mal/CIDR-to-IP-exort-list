@@ -1,2 +1,2 @@
-# CIDR-to-IP-exort-list
+# CIDR-to-IP-export-list
 Subnet host range list creator
