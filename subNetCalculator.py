@@ -118,12 +118,18 @@ class SubNCalc:
         else:
             print("Please correct mistake")
 
+    def help_info(self):
+        print('--- File to upload should be txt in following format:\n 192.168.0.0/20,test,eve\n 192.165.128.0/18,test2,adam ---')
+        return self.start_menu()
+
     def start_menu(self):
-        print("Please choose:\n1) To upload txt file\n0) To exit")
+        print("Please choose:\n1) To upload txt file\n2) Help\n0) To exit")
         self.user_input = input()
         while self.user_input != '0':
             if self.user_input == '1':
                 self.save_file()
+            elif self.user_input == '2':
+                self.help_info()
             elif self.user_input == '0':
                 print('Bye!')
                 break
