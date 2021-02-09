@@ -20,7 +20,7 @@ class SubNCalc:
                 return new_list
         except FileNotFoundError:
             print("Please checks if file is in directory")
-            self.start_menu()
+            #return self.start_menu()
 
     def up_to_eight(self, power, sn_list):
         sn_list = sn_list[0].split('.')
@@ -71,45 +71,52 @@ class SubNCalc:
 
     def sub_net_mask(self):
         sub_list = self.open_file()
-        s = [x.replace('/', ',') for x in sub_list]
-        sn_length = [x.split(',') for x in s]
-        for x in sn_length:
-            if len(x) != 4:
-                print('incorrect input in txt file')
-                break
-        else:
+        if sub_list:
+            s = [x.replace('/', ',') for x in sub_list]
+            sn_length = [x.split(',') for x in s]
             all_ip_list = []
-            for y in sn_length:
-                power = 32 - int(y[1])
-                if power <= 8:
-                    a = self.up_to_eight(power, y)
-                    for x in a:
-                        all_ip_list.append(x + ',' + y[2] + ',' + y[3])
-                elif 8 < power <= 16:
-                    a = self.below_sixteen(power, y)
-                    for x in a:
-                        all_ip_list.append(x + ',' + y[2] + ',' + y[3])
-                elif power > 16:
-                    a = self.above_sixteen(power, y)
-                    for x in a:
-                        all_ip_list.append(x + ',' + y[2] + ',' + y[3])
+            for x in sn_length:
+                if len(x) != 4:
+                    print('incorrect input in txt file')
+                    break
+            else:
+                for y in sn_length:
+                    power = 32 - int(y[1])
+                    if power <= 8:
+                        a = self.up_to_eight(power, y)
+                        for x in a:
+                            all_ip_list.append(x + ',' + y[2] + ',' + y[3])
+                    elif 8 < power <= 16:
+                        a = self.below_sixteen(power, y)
+                        for x in a:
+                            all_ip_list.append(x + ',' + y[2] + ',' + y[3])
+                    elif power > 16:
+                        a = self.above_sixteen(power, y)
+                        for x in a:
+                            all_ip_list.append(x + ',' + y[2] + ',' + y[3])
+                    else:
+                        print("Oops, something went wrong..")
             print(sn_length)
             return all_ip_list
+        else:
+            print('The txt file is incorrect')
+            return False
 
     def save_file(self):
         with open('my_list.csv', 'w+') as my_file:
             titles = 'ip_address,reason,requested_by'
             my_file.write(titles)
-        with open('my_list.csv', 'a+') as my_file:
-            if self.sub_net_mask():
-                inner_list = self.sub_net_mask()
+        inner_list = self.sub_net_mask()
+        if inner_list:
+            with open('my_list.csv', 'a+') as my_file:
                 my_file.write('\n')
                 for x in inner_list:
                     my_file.write(x)
                     my_file.write('\n')
-                return self.start_menu()
-            else:
-                print("Please correct mistake")
+                print("File created - my_list.csv")
+                return my_file
+        else:
+            print("Please correct mistake")
 
     def start_menu(self):
         print("Please choose:\n1) To upload txt file\n0) To exit")
