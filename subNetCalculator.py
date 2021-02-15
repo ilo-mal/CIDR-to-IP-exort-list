@@ -1,12 +1,20 @@
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('txt_file', help='''---
+File to upload should be txt in following format:
+192.168.0.0/20,test,eve ---''')
+args = parser.parse_args()
+txt_file = args.txt_file
+
 
 class SubNCalc:
 
     def __init__(self):
-        self.start_menu()
+        self.user_input = txt_file
+        self.save_file()
 
     def open_file(self):
-        print('Please put file name:')
-        self.user_input = input()
         try:
             with open(self.user_input, "r") as sub_net_list:
                 sub_net_list = sub_net_list.readlines()
@@ -20,7 +28,6 @@ class SubNCalc:
                 return new_list
         except FileNotFoundError:
             print("Please checks if file is in directory")
-            #return self.start_menu()
 
     def up_to_eight(self, power, sn_list):
         sn_list = sn_list[0].split('.')
@@ -38,7 +45,6 @@ class SubNCalc:
         sn = [int(x) for x in sn_list]
         ip_list = []
         power = power
-        all_number = ((2 ** 8) * (2 ** (power - 8))) - 2
         power_r = power - 8
         max_numb = (2 ** power_r)
         last_num_list = [x for x in range(0, 256)]
@@ -55,7 +61,6 @@ class SubNCalc:
         sn = [int(x) for x in sn_list]
         ip_list = []
         power = power
-        all_number = (2 * (2 ** 8) * (2 ** (power - 16))) - 2
         power_r = power - 16
         max_numb = (2 ** power_r)
         last_num_list = [x for x in range(0, 256)]
@@ -79,24 +84,23 @@ class SubNCalc:
                 if len(x) != 4:
                     print('incorrect input in txt file')
                     break
-            else:
-                for y in sn_length:
-                    power = 32 - int(y[1])
-                    if power <= 8:
-                        a = self.up_to_eight(power, y)
-                        for x in a:
-                            all_ip_list.append(x + ',' + y[2] + ',' + y[3])
-                    elif 8 < power <= 16:
-                        a = self.below_sixteen(power, y)
-                        for x in a:
-                            all_ip_list.append(x + ',' + y[2] + ',' + y[3])
-                    elif power > 16:
-                        a = self.above_sixteen(power, y)
-                        for x in a:
-                            all_ip_list.append(x + ',' + y[2] + ',' + y[3])
-                    else:
-                        print("Oops, something went wrong..")
-            print(sn_length)
+                else:
+                    for y in sn_length:
+                        power = 32 - int(y[1])
+                        if power <= 8:
+                            a = self.up_to_eight(power, y)
+                            for p in a:
+                                all_ip_list.append(p + ',' + y[2] + ',' + y[3])
+                        elif 8 < power <= 16:
+                            a = self.below_sixteen(power, y)
+                            for n in a:
+                                all_ip_list.append(n + ',' + y[2] + ',' + y[3])
+                        elif power > 16:
+                            a = self.above_sixteen(power, y)
+                            for k in a:
+                                all_ip_list.append(k + ',' + y[2] + ',' + y[3])
+                        else:
+                            print("Oops, something went wrong..")
             return all_ip_list
         else:
             print('The txt file is incorrect')
@@ -116,25 +120,7 @@ class SubNCalc:
                 print("File created - my_list.csv")
                 return my_file
         else:
-            print("Please correct mistake")
-
-    def help_info(self):
-        print('--- File to upload should be txt in following format:\n 192.168.0.0/20,test,eve\n 192.165.128.0/18,test2,adam ---')
-        return self.start_menu()
-
-    def start_menu(self):
-        print("Please choose:\n1) To upload txt file\n2) Help\n0) To exit")
-        self.user_input = input()
-        while self.user_input != '0':
-            if self.user_input == '1':
-                self.save_file()
-            elif self.user_input == '2':
-                self.help_info()
-            elif self.user_input == '0':
-                print('Bye!')
-                break
-            else:
-                self.start_menu()
+            pass
 
 
 SubNCalc()
